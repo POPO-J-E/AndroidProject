@@ -1,7 +1,12 @@
 # AndroidProject
 
-**_ Authors :** DOLLE Jérémy | DEBARD Etienne _
-**_ Workflow :** Features branches _
-**_ Subject :** Android application _
-**_ Techs :**  _
-**_ Libs :**  _
+**Authors :** _DOLLE Jérémy | DEBARD Etienne _
+
+**Workflow :** _Features branches _
+
+**Subject :** _Android application _
+
+**Techs :** 
+- SDK 4.4 KitKat
+
+**Libs :**
