@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements QuestionFragment.
     public void changeFragment(){
         QuestionFragment newFragment = new QuestionFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left);
 
         transaction.replace(R.id.frangment_container, newFragment);
         transaction.addToBackStack(null);
