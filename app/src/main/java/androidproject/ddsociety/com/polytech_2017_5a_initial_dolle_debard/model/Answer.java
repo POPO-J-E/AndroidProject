@@ -7,20 +7,24 @@ import java.io.Serializable;
  */
 
 public class Answer implements Serializable{
-    private static int ids = 0;
 
     private String answer;
     private boolean correct;
     private int id;
 
-    public Answer(String answer, boolean correct) {
-        this.answer = answer;
-        this.correct = correct;
-        this.id = ids++;
+    public Answer()
+    {
+
     }
 
-    public Answer(String answer) {
-        this(answer, false);
+    public Answer(int id, String answer, boolean correct) {
+        this.answer = answer;
+        this.correct = correct;
+        this.id = id;
+    }
+
+    public Answer(int id, String answer) {
+        this(id, answer, false);
     }
 
     public String getAnswer() {
@@ -35,7 +39,15 @@ public class Answer implements Serializable{
         return id;
     }
 
-    public static int getIds() {
-        return ids;
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

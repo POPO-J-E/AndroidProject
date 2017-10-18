@@ -7,10 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.Serializable;
+import java.util.List;
 
+import androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.model.Answer;
 import androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.model.Question;
+import androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.receiver.QuestionResultReceiver;
+import androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.service.QuestionService;
 
 
 /**
@@ -21,13 +27,14 @@ import androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.model.
  * Use the {@link QuestionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class QuestionFragment extends Fragment {
+public class QuestionFragment extends Fragment implements QuestionResultReceiver.QuestionReceiver {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_QUESTION = "question";
 
     // TODO: Rename and change types of parameters
     private Question question;
+    private int question_index;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,22 +73,27 @@ public class QuestionFragment extends Fragment {
             }
         }
 
-//        QuestionService.startActionGetQuestion(this.getContext(), 0);
-
+        question_index = 0;
+        QuestionService.startActionGetQuestion(this.getContext(), question_index, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_question, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_question, container, false);
+
+        ((Button)view.findViewById(R.id.question_btn_1)).setOnClickListener(new AnswerButtonListener(0, this));
+        ((Button)view.findViewById(R.id.question_btn_2)).setOnClickListener(new AnswerButtonListener(1, this));
+        ((Button)view.findViewById(R.id.question_btn_3)).setOnClickListener(new AnswerButtonListener(2, this));
+        ((Button)view.findViewById(R.id.question_btn_4)).setOnClickListener(new AnswerButtonListener(3, this));
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    public void onAnswer(int id) {
+        QuestionService.startActionCheckAnswer(this.getContext(), question_index, question.getAnswers().get(id).getId(), this);
     }
 
     @Override
@@ -101,6 +113,51 @@ public class QuestionFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onReceiveQuestionResult(int resultCode, Bundle resultData) {
+        System.out.println("receive question result "+resultCode);
+
+        switch (resultCode) {
+            case QuestionService.CODE_GET_QUESTION:
+                Serializable qSer = resultData.getSerializable(QuestionService.ARG_QUESTION);
+                if(qSer instanceof Question)
+                {
+                    question = (Question)qSer;
+                }
+                else
+                {
+                    throw new RuntimeException("question arg must be instance of Question");
+                }
+                updateQuestionView();
+                break;
+            case QuestionService.CODE_CHECK_ANSWER:
+                boolean correct = resultData.getBoolean(QuestionService.ARG_ANSWER);
+                System.out.println("question "+correct);
+                getNextQuestion();
+                break;
+            case QuestionService.CODE_ERROR:
+                /* Handle the error */
+                System.out.println("error");
+                break;
+        }
+    }
+
+    private void getNextQuestion() {
+        this.question_index++;
+        QuestionService.startActionGetQuestion(this.getContext(), question_index, this);
+    }
+
+    private void updateQuestionView() {
+        TextView questionView = (TextView)getActivity().findViewById(R.id.question_title);
+        questionView.setText(question.getQuestion());
+
+        List<Answer> answers = question.getAnswers();
+        ((Button)getActivity().findViewById(R.id.question_btn_1)).setText(answers.get(0).getAnswer());
+        ((Button)getActivity().findViewById(R.id.question_btn_2)).setText(answers.get(1).getAnswer());
+        ((Button)getActivity().findViewById(R.id.question_btn_3)).setText(answers.get(2).getAnswer());
+        ((Button)getActivity().findViewById(R.id.question_btn_4)).setText(answers.get(3).getAnswer());
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -114,5 +171,21 @@ public class QuestionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class AnswerButtonListener implements View.OnClickListener{
+
+        private int id;
+        private QuestionFragment question;
+
+        public AnswerButtonListener(int id, QuestionFragment question) {
+            this.id = id;
+            this.question = question;
+        }
+
+        @Override
+        public void onClick(View view) {
+            question.onAnswer(id);
+        }
     }
 }
