@@ -1,12 +1,15 @@
 package androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 
 /**
@@ -26,6 +29,7 @@ public class DrawableFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private AnimationDrawable persoAnimation;
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,11 +64,20 @@ public class DrawableFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drawable, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_drawable, container, false);
+        ImageView img = (ImageView) rootView.findViewById(R.id.img_arthur);
+        img.setEnabled(false);
+//        img.setBackgroundResource(R.color.colorAccent);
+        img.setBackgroundResource(R.drawable.drawable_arthur);
+        persoAnimation = (AnimationDrawable) img.getBackground();
+        persoAnimation.start();
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
