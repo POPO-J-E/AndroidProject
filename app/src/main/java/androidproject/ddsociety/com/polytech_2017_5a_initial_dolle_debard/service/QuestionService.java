@@ -93,6 +93,7 @@ public class QuestionService extends IntentService {
      */
     private void handleActionGetQuestion(int question_index) {
         // TODO: Handle action Foo
+        System.out.println("get question");
         throw new UnsupportedOperationException("Not yet implemented");
     }
 

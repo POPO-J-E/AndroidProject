@@ -1,10 +1,12 @@
 package androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.model;
 
+import java.io.Serializable;
+
 /**
  * Created by kifkif on 18/10/2017.
  */
 
-public class Answer {
+public class Answer implements Serializable{
     private static int ids = 0;
 
     private String answer;

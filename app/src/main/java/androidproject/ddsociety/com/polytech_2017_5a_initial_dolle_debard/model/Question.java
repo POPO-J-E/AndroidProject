@@ -1,5 +1,6 @@
 package androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by kifkif on 18/10/2017.
  */
 
-public class Question {
+public class Question implements Serializable {
     private String question;
     private List<Answer> answers;
 

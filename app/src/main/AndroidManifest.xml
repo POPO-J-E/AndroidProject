@@ -19,7 +19,11 @@
 
         <service
             android:name=".service.QuestionService"
-            android:exported="false"></service>
+            android:exported="false">
+            <intent-filter>
+                <action android:name="quizz.service.question_service"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
