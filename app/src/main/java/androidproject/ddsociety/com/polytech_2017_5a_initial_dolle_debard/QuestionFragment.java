@@ -4,11 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 
 /**
@@ -60,28 +58,15 @@ public class QuestionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_question, container, false);
-        Button btnSolo = (Button) rootView.findViewById(R.id.btn_solo);
-        btnSolo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeFragment();
-            }
-        });
-        return rootView;
+        return inflater.inflate(R.layout.fragment_question, container, false);
     }
-
-    private void changeFragment() {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.changeFragment();
-    }
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

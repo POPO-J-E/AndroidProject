@@ -5,14 +5,14 @@
     android:id="@+id/frangment_container">
 
     <!--<fragment-->
-        <!--android:name="androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.QuestionFragment"-->
+        <!--android:name="androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.MenuFragment
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--android:id="@+id/fragment_question"/>-->
 
 
     <!--<fragment-->
-        <!--android:name="androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.MenuFragment"-->
+        <!--android:name="androidproject.ddsociety.com.polytech_2017_5a_initial_dolle_debard.QuestionFragmentment"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--android:id="@+id/fragment_menu"/>-->

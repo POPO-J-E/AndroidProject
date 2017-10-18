@@ -5,13 +5,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener, QuestionFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements QuestionFragment.OnFragmentInteractionListener, MenuFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        QuestionFragment fragment = new QuestionFragment();
+        MenuFragment fragment = new MenuFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frangment_container, fragment);
         transaction.commit();
@@ -24,11 +24,12 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnFr
     }
 
     public void changeFragment(){
-        MenuFragment newFragment = new MenuFragment();
+        QuestionFragment newFragment = new QuestionFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
         transaction.replace(R.id.frangment_container, newFragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
